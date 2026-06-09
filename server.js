@@ -1,5 +1,4 @@
 const express = require("express");
-const crypto = require("crypto");
 const axios = require("axios");
 const app = express();
 
@@ -10,16 +9,12 @@ app.use(express.urlencoded({ extended: true }));
 //   KONFIGURASI - EDIT BAGIAN INI
 // =============================================
 const CONFIG = {
-  // Token dari Saweria (Settings > Webhook)
-  SAWERIA_TOKEN: "ISI_SAWERIA_WEBHOOK_TOKEN_KAMU",
-
   // Roblox Open Cloud API Key
   // Buat di: https://create.roblox.com/credentials
-  ROBLOX_API_KEY: "ISI_ROBLOX_API_KEY_KAMU",
+  ROBLOX_API_KEY: "bcnMJ5/K6ke0Vh0P6pGfwgwohiNkOzBpGmWL+BfftE3AAZIyZXlKaGJHY2lPaUpTVXpJMU5pSXNJbXRwWkNJNkluTnBaeTB5TURJeExUQTNMVEV6VkRFNE9qVXhPalE1V2lJc0luUjVjQ0k2SWtwWFZDSjkuZXlKaGRXUWlPaUpTYjJKc2IzaEpiblJsY201aGJDSXNJbWx6Y3lJNklrTnNiM1ZrUVhWMGFHVnVkR2xqWVhScGIyNVRaWEoyYVdObElpd2lZbUZ6WlVGd2FVdGxlU0k2SW1KamJrMUtOUzlMTm10bE1GWm9NRkEyY0VkbWQyZDNiMmhwVG10UGVrSndSMjFYVEN0Q1ptWjBSVE5CUVZwSmVTSXNJbTkzYm1WeVNXUWlPaUk1TURreU5ERTBNallpTENKbGVIQWlPakUzT0RFd01UQXdNRGdzSW1saGRDSTZNVGM0TVRBd05qUXdPQ3dpYm1KbUlqb3hOemd4TURBMk5EQTRmUS5ucU5sLUpqRDgxaVd4bS1tRGp4UVUtclNJWHFhTDloek5nazJZckhLcTBlYjZOWDhCc24yXzVzNUZCWjd1Y1g2M2FfU0plT2Q1eFRhSE5jX01FenUtWGx0VzBSVzVtMmh0TG0yTFBMYmcyekhUZjFyNWItUVl1eGJaTk9DWnE2NDMxcTJPbWc0U0ZWYmRpdFh2dVBYcEFnaXdMZk43TUFROUJGNmtTQUtkNE1UejBSa3NBNnRoY1JhSmR1VEVSczhWd2cyNGd0aFZqT1FlRVlkUlBOSXR2NmdkaHMzdnRBZW5tSmtYOHVBTXBlQUpLWVItUVRPT0dOYnY4VkVNTmpVbXp3ZmlxVHI5SGVFQkxhQmZyNlZxWjk3WmRSdktkM2I0WF9wcUFhenJ0QVg1T0U1MnJubXd1UDJfdjIzWG5QQ3JLdjRxNlYyTGFzaGZlVW1oaTlacVE=",
 
   // Universe ID game Roblox kamu
-  // Bisa dilihat di Roblox Studio > Game Settings > Basic Info
-  ROBLOX_UNIVERSE_ID: "ISI_UNIVERSE_ID_KAMU",
+  ROBLOX_UNIVERSE_ID: "9748210057",
 
   // Topic untuk MessagingService (harus sama dengan di script Roblox)
   MESSAGING_TOPIC: "SaweriaNotif",
@@ -27,12 +22,6 @@ const CONFIG = {
   PORT: process.env.PORT || 3000,
 };
 // =============================================
-
-// Verifikasi signature dari Saweria
-function verifySaweriaSignature(req) {
-  const signature = req.headers["x-saweria-callback-token"];
-  return signature === CONFIG.SAWERIA_TOKEN;
-}
 
 // Kirim pesan ke Roblox via Open Cloud MessagingService
 async function sendToRoblox(data) {
@@ -56,12 +45,6 @@ async function sendToRoblox(data) {
 app.post("/saweria-webhook", async (req, res) => {
   console.log("[Webhook] Incoming request from Saweria");
   console.log("[Webhook] Body:", JSON.stringify(req.body, null, 2));
-
-  // Verifikasi token
-  if (!verifySaweriaSignature(req)) {
-    console.warn("[Webhook] Invalid token! Request ditolak.");
-    return res.status(401).json({ error: "Unauthorized" });
-  }
 
   const body = req.body;
 
