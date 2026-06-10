@@ -105,14 +105,14 @@ app.post("/saweria-webhook", async (req, res) => {
     "Anonim"
   ).trim().substring(0, 50); // max 50 karakter
 
-  // FIX UTAMA: parse amount dengan benar
   const jumlah = parseAmount(
+    body.amount_raw     ||  // ← field utama Saweria
     body.amount         ||
     body.jumlah         ||
     body.total          ||
     body.donation_amount||
     0
-  );
+);
 
   const pesan = String(
     body.message ||
