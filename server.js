@@ -1,6 +1,6 @@
 const express = require("express");
-const axios = require("axios");
-const app = express();
+const axios   = require("axios");
+const app     = express();
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -10,75 +10,231 @@ app.use(express.urlencoded({ extended: true }));
 // =============================================
 const CONFIG = {
   // Roblox Open Cloud API Key
-  // Buat di: https://create.roblox.com/credentials
-  ROBLOX_API_KEY: "bcnMJ5/K6ke0Vh0P6pGfwgwohiNkOzBpGmWL+BfftE3AAZIyZXlKaGJHY2lPaUpTVXpJMU5pSXNJbXRwWkNJNkluTnBaeTB5TURJeExUQTNMVEV6VkRFNE9qVXhPalE1V2lJc0luUjVjQ0k2SWtwWFZDSjkuZXlKaGRXUWlPaUpTYjJKc2IzaEpiblJsY201aGJDSXNJbWx6Y3lJNklrTnNiM1ZrUVhWMGFHVnVkR2xqWVhScGIyNVRaWEoyYVdObElpd2lZbUZ6WlVGd2FVdGxlU0k2SW1KamJrMUtOUzlMTm10bE1GWm9NRkEyY0VkbWQyZDNiMmhwVG10UGVrSndSMjFYVEN0Q1ptWjBSVE5CUVZwSmVTSXNJbTkzYm1WeVNXUWlPaUk1TURreU5ERTBNallpTENKbGVIQWlPakUzT0RFd01UQXdNRGdzSW1saGRDSTZNVGM0TVRBd05qUXdPQ3dpYm1KbUlqb3hOemd4TURBMk5EQTRmUS5ucU5sLUpqRDgxaVd4bS1tRGp4UVUtclNJWHFhTDloek5nazJZckhLcTBlYjZOWDhCc24yXzVzNUZCWjd1Y1g2M2FfU0plT2Q1eFRhSE5jX01FenUtWGx0VzBSVzVtMmh0TG0yTFBMYmcyekhUZjFyNWItUVl1eGJaTk9DWnE2NDMxcTJPbWc0U0ZWYmRpdFh2dVBYcEFnaXdMZk43TUFROUJGNmtTQUtkNE1UejBSa3NBNnRoY1JhSmR1VEVSczhWd2cyNGd0aFZqT1FlRVlkUlBOSXR2NmdkaHMzdnRBZW5tSmtYOHVBTXBlQUpLWVItUVRPT0dOYnY4VkVNTmpVbXp3ZmlxVHI5SGVFQkxhQmZyNlZxWjk3WmRSdktkM2I0WF9wcUFhenJ0QVg1T0U1MnJubXd1UDJfdjIzWG5QQ3JLdjRxNlYyTGFzaGZlVW1oaTlacVE=",
+  // Buat/regenerate di: https://create.roblox.com/credentials
+  ROBLOX_API_KEY: "bcnMJ5/K6ke0Vh0P6pGfwiEuCoYNY6B6T6MUsDSYV1sZHtncZXlKaGJHY2lPaUpTVXpJMU5pSXNJbXRwWkNJNkluTnBaeTB5TURJeExUQTNMVEV6VkRFNE9qVXhPalE1V2lJc0luUjVjQ0k2SWtwWFZDSjkuZXlKaGRXUWlPaUpTYjJKc2IzaEpiblJsY201aGJDSXNJbWx6Y3lJNklrTnNiM1ZrUVhWMGFHVnVkR2xqWVhScGIyNVRaWEoyYVdObElpd2lZbUZ6WlVGd2FVdGxlU0k2SW1KamJrMUtOUzlMTm10bE1GWm9NRkEyY0VkbWQybEZkVU52V1U1Wk5rSTJWRFpOVlhORVUxbFdNWE5hU0hSdVl5SXNJbTkzYm1WeVNXUWlPaUl6TWpVd056a3dOaklpTENKbGVIQWlPakUzT0RFd09EVTVORGNzSW1saGRDSTZNVGM0TVRBNE1qTTBOeXdpYm1KbUlqb3hOemd4TURneU16UTNmUS5uZmt3enh2OGlpTDNmZ283UWxZR0Q0WUZvRjc3TVZzVllmX2UzeTdYNk1uQ3Y0eVVuNGU4TEpkdVQzc2o1NHV1NVhsZGJJdFNfMnRYTEpmSUJ5WFoxZW1ZTms0Um9ENFFFVVFRLWl5Q3p0T1NzRHdHMEhjRVRkcTV2UWVad2dhdkwyeXlySy0xX09GdXJlU3pNSkNveGZmMUMxRmZQQ2V4d21QN2hXaHhDWm5HaHJqRHR5MXVibHlfNUxRMlRac012VFJHamtkdkItRWtYYzlmUVJ4WERWZUFFN0xZRC1ka0JkRFNhVGliellqLXMxV21qb0I4VUZ6N0oxeE5aOERQblFLM3JRYm1ib2poRURiYjFNNVVBTlZIWXk3bWNyV3lMMjl0VTY1bXZ1OHFTeVY2VUl6U3FjREt4d1oyMHlPYUV5bmRRQzhEUDFUYkpXR250YVN5MlE=",
 
   // Universe ID game Roblox kamu
+  // Cek di: https://create.roblox.com/dashboard/creations
   ROBLOX_UNIVERSE_ID: "9748210057",
 
-  // Topic untuk MessagingService (harus sama dengan di script Roblox)
+  // Topic MessagingService (harus sama persis dengan di script Roblox)
   MESSAGING_TOPIC: "SaweriaNotif",
+
+  // Secret token dari Saweria (opsional tapi disarankan untuk keamanan)
+  // Isi jika Saweria mengirim header Authorization atau X-Saweria-Token
+  SAWERIA_SECRET: "",
 
   PORT: process.env.PORT || 3000,
 };
-// =============================================
 
-// Kirim pesan ke Roblox via Open Cloud MessagingService
+// =============================================
+//   HELPER: Parse jumlah donasi dengan benar
+//   Saweria kirim "5.036" (titik = ribuan di ID)
+//   tonumber("5.036") = 5.036 → SALAH
+//   Solusi: hapus semua non-digit dulu
+// =============================================
+function parseAmount(raw) {
+  if (raw === null || raw === undefined) return 0;
+  if (typeof raw === "number") return Math.floor(raw);
+  // Hapus semua karakter bukan digit (titik, koma, spasi, Rp, dll)
+  const cleaned = String(raw).replace(/[^\d]/g, "");
+  const result  = parseInt(cleaned, 10);
+  return isNaN(result) ? 0 : result;
+}
+
+// =============================================
+//   HELPER: Kirim ke Roblox via Open Cloud
+// =============================================
 async function sendToRoblox(data) {
   const url = `https://apis.roblox.com/messaging-service/v1/universes/${CONFIG.ROBLOX_UNIVERSE_ID}/topics/${CONFIG.MESSAGING_TOPIC}`;
 
-  const payload = {
-    message: JSON.stringify(data),
-  };
+  const messageStr = JSON.stringify(data);
 
-  const response = await axios.post(url, payload, {
-    headers: {
-      "x-api-key": CONFIG.ROBLOX_API_KEY,
-      "Content-Type": "application/json",
-    },
-  });
+  // Roblox MessagingService max message size: 1024 bytes
+  if (Buffer.byteLength(messageStr, "utf8") > 1000) {
+    console.warn("[Roblox] Pesan terlalu panjang, pesan dipotong.");
+    data.pesan = data.pesan ? data.pesan.substring(0, 100) : "";
+  }
+
+  const response = await axios.post(
+    url,
+    { message: JSON.stringify(data) },
+    {
+      headers: {
+        "x-api-key":     CONFIG.ROBLOX_API_KEY,
+        "Content-Type":  "application/json",
+      },
+      timeout: 10000, // 10 detik timeout
+    }
+  );
 
   return response.status === 200;
 }
 
-// Route utama: menerima webhook dari Saweria
+// =============================================
+//   MIDDLEWARE: Log semua request masuk
+// =============================================
+app.use((req, res, next) => {
+  console.log(`[${new Date().toISOString()}] ${req.method} ${req.path}`);
+  next();
+});
+
+// =============================================
+//   ROUTE: Webhook dari Saweria
+// =============================================
 app.post("/saweria-webhook", async (req, res) => {
-  console.log("[Webhook] Incoming request from Saweria");
-  console.log("[Webhook] Body:", JSON.stringify(req.body, null, 2));
+  console.log("\n========== DONASI MASUK ==========");
+  console.log("[Webhook] Body mentah:", JSON.stringify(req.body, null, 2));
 
   const body = req.body;
 
-  // Ambil data donasi dari payload Saweria
+  // Validasi: body harus ada isinya
+  if (!body || Object.keys(body).length === 0) {
+    console.warn("[Webhook] Body kosong, abaikan.");
+    return res.status(400).json({ error: "Body kosong" });
+  }
+
+  // ── Parse data donasi ──
+  // Saweria bisa kirim berbagai field name, semua di-cover di sini
+  const donatur = String(
+    body.donator_name  ||
+    body.donor_name    ||
+    body.name          ||
+    body.username      ||
+    body.from          ||
+    "Anonim"
+  ).trim().substring(0, 50); // max 50 karakter
+
+  // FIX UTAMA: parse amount dengan benar
+  const jumlah = parseAmount(
+    body.amount         ||
+    body.jumlah         ||
+    body.total          ||
+    body.donation_amount||
+    0
+  );
+
+  const pesan = String(
+    body.message ||
+    body.pesan   ||
+    body.msg     ||
+    body.comment ||
+    ""
+  ).trim().substring(0, 200); // max 200 karakter
+
   const donationData = {
-    donatur: body.donator_name || body.name || "Anonim",
-    jumlah: body.amount || 0,
-    pesan: body.message || "",
+    donatur,
+    jumlah,
+    pesan,
     timestamp: new Date().toISOString(),
   };
 
-  console.log("[Donation] Data:", donationData);
+  console.log("[Donation] Data yang akan dikirim ke Roblox:", donationData);
 
+  // Validasi jumlah
+  if (jumlah <= 0) {
+    console.warn("[Webhook] Jumlah donasi 0 atau tidak valid, tetap dikirim.");
+    // Tetap dikirim supaya nama donatur tetap muncul di board
+  }
+
+  // ── Kirim ke Roblox ──
   try {
     const success = await sendToRoblox(donationData);
     if (success) {
-      console.log("[Roblox] Notifikasi berhasil dikirim!");
-      return res.status(200).json({ status: "ok", message: "Notifikasi terkirim" });
+      console.log("[Roblox] ✅ Notifikasi berhasil dikirim!");
+      console.log("===================================\n");
+      return res.status(200).json({
+        status:  "ok",
+        message: "Notifikasi terkirim ke Roblox",
+        data:    donationData,
+      });
     } else {
-      console.error("[Roblox] Gagal mengirim notifikasi");
+      console.error("[Roblox] ❌ Gagal mengirim notifikasi (status bukan 200)");
       return res.status(500).json({ error: "Gagal kirim ke Roblox" });
     }
   } catch (err) {
-    console.error("[Error]", err.response?.data || err.message);
-    return res.status(500).json({ error: "Internal server error" });
+    const errData = err.response?.data;
+    const errMsg  = err.message;
+    console.error("[Error] Gagal kirim ke Roblox:");
+    console.error("  Status :", err.response?.status);
+    console.error("  Message:", errMsg);
+    console.error("  Detail :", JSON.stringify(errData, null, 2));
+
+    // Cek error umum dan beri pesan yang jelas
+    if (err.response?.status === 401) {
+      console.error("  → API Key tidak valid atau sudah expired! Update ROBLOX_API_KEY.");
+    } else if (err.response?.status === 404) {
+      console.error("  → Universe ID tidak ditemukan! Cek ROBLOX_UNIVERSE_ID.");
+    } else if (err.response?.status === 429) {
+      console.error("  → Rate limit! Terlalu banyak request.");
+    }
+
+    return res.status(500).json({
+      error:   "Internal server error",
+      detail:  errData || errMsg,
+    });
   }
 });
 
-// Health check
-app.get("/", (req, res) => {
-  res.json({ status: "Server berjalan!", timestamp: new Date().toISOString() });
+// =============================================
+//   ROUTE: Test manual kirim donasi
+//   POST /test-donation
+//   Body: { donatur, jumlah, pesan }
+// =============================================
+app.post("/test-donation", async (req, res) => {
+  console.log("\n========== TEST DONATION ==========");
+
+  const donationData = {
+    donatur: String(req.body.donatur || "TestUser").substring(0, 50),
+    jumlah:  parseAmount(req.body.jumlah || 50000),
+    pesan:   String(req.body.pesan   || "Test donasi!").substring(0, 200),
+    timestamp: new Date().toISOString(),
+  };
+
+  console.log("[Test] Kirim:", donationData);
+
+  try {
+    const success = await sendToRoblox(donationData);
+    console.log("[Test] Hasil:", success ? "✅ Berhasil" : "❌ Gagal");
+    return res.status(success ? 200 : 500).json({
+      status: success ? "ok" : "error",
+      data:   donationData,
+    });
+  } catch (err) {
+    console.error("[Test] Error:", err.response?.data || err.message);
+    return res.status(500).json({
+      error:  "Gagal kirim",
+      detail: err.response?.data || err.message,
+    });
+  }
 });
 
+// =============================================
+//   ROUTE: Health check
+// =============================================
+app.get("/", (req, res) => {
+  res.json({
+    status:       "✅ Server berjalan!",
+    timestamp:    new Date().toISOString(),
+    universe_id:  CONFIG.ROBLOX_UNIVERSE_ID,
+    topic:        CONFIG.MESSAGING_TOPIC,
+    api_key_set:  CONFIG.ROBLOX_API_KEY !== "ISI_API_KEY_BARU_DISINI" && CONFIG.ROBLOX_API_KEY !== "",
+  });
+});
+
+// =============================================
+//   START SERVER
+// =============================================
 app.listen(CONFIG.PORT, () => {
-  console.log(`✅ Server berjalan di port ${CONFIG.PORT}`);
-  console.log(`📡 Webhook URL: http://localhost:${CONFIG.PORT}/saweria-webhook`);
+  console.log(`\n✅ Server berjalan di port ${CONFIG.PORT}`);
+  console.log(`📡 Webhook URL  : http://localhost:${CONFIG.PORT}/saweria-webhook`);
+  console.log(`🧪 Test URL     : POST http://localhost:${CONFIG.PORT}/test-donation`);
+  console.log(`❤️  Health check : GET  http://localhost:${CONFIG.PORT}/\n`);
+
+  if (CONFIG.ROBLOX_API_KEY === "ISI_API_KEY_BARU_DISINI" || CONFIG.ROBLOX_API_KEY === "") {
+    console.warn("⚠️  PERINGATAN: ROBLOX_API_KEY belum diisi! Update dulu sebelum dipakai.");
+  }
+  if (CONFIG.SAWERIA_SECRET === "") {
+    console.warn("⚠️  SAWERIA_SECRET kosong. Disarankan diisi untuk keamanan webhook.");
+  }
 });
