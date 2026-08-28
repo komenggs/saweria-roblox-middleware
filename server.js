@@ -15,7 +15,7 @@ ROBLOX_API_KEY: process.env.ROBLOX_API_KEY || "",
   
   // Universe ID game Roblox kamu
   // Cek di: https://create.roblox.com/dashboard/creations
-  ROBLOX_UNIVERSE_ID: "9748210057",
+  ROBLOX_UNIVERSE_ID: "10762240169",
 
   // Topic MessagingService (harus sama persis dengan di script Roblox)
   MESSAGING_TOPIC: "SaweriaNotif",
